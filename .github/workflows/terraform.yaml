@@ -17,8 +17,8 @@ jobs:
       - name: AWS Authentication
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: ${AWS_REGION}
-          role-to-assume: ${secrets.AWS_IAM_ROLE}
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
