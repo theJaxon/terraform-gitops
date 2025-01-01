@@ -1,0 +1,32 @@
+name: Terraform workflow
+
+on: workflow_dispatch
+
+env:
+  AWS_REGION:  us-east-1
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: AWS Authentication
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${AWS_REGION}
+          role-to-assume: ${secrets.AWS_IAM_ROLE}
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.3"
+
+      - name: Initialize terraform
+        run: terraform init
