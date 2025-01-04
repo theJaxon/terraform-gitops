@@ -30,3 +30,5 @@ jobs:
 
       - name: Initialize terraform
         run: terraform init
+      - name: List state file resources
+        run: terraform state list
