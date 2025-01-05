@@ -23,6 +23,7 @@ resource "aws_instance" "ubuntu_instance" {
   instance_type = var.ec2_instance_type
 
   tags = {
-    Name = "ubuntu"
+    Name        = "ubuntu",
+    Environment = "Dev"
   }
 }
