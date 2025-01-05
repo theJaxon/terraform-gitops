@@ -4,7 +4,7 @@ terraform {
 
 data "aws_ami" "ubuntu_ami" {
   most_recent = true
-  owners = ["099720109477"] # Canonical
+  owners      = ["099720109477"] # Canonical
 
   filter {
     name   = "name"
@@ -20,7 +20,7 @@ data "aws_ami" "ubuntu_ami" {
 
 resource "aws_instance" "ubuntu_instance" {
   ami           = data.aws_ami.ubuntu_ami.id
-  instance_type = "t3.micro"
+  instance_type = var.ec2_instance_type
 
   tags = {
     Name = "ubuntu"
