@@ -19,6 +19,7 @@ data "aws_ami" "ubuntu_ami" {
 }
 
 resource "aws_instance" "ubuntu_instance" {
+  count         = 2
   ami           = data.aws_ami.ubuntu_ami.id
   instance_type = var.ec2_instance_type
 
