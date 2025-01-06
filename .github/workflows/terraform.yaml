@@ -6,7 +6,6 @@ env:
   AWS_REGION:  us-east-1
   GH_TOKEN: ${{ github.token }}
   TF_IN_AUTOMATION: true
-  TF_PLUGIN_CACHE_DIR=: "${HOME}/.terraform.d/plugin-cache"
 
 permissions:
   id-token: write
@@ -43,6 +42,7 @@ jobs:
 
       - name: Initialize terraform
         run: |
+          export TF_PLUGIN_CACHE_DIR="${HOME}/.terraform.d/plugin-cache"
           terraform init \
           -backend-config="bucket=${{ secrets.TF_S3_BACKEND_BUCKET_NAME }}" \
           -backend-config="key=${{ secrets.TF_S3_BACKEND_KEY }}" \
