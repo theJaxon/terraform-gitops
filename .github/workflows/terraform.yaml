@@ -5,7 +5,7 @@ on: workflow_dispatch
 env:
   AWS_REGION:  us-east-1
   GH_TOKEN: ${{ github.token }}
-  
+
 permissions:
   id-token: write
   contents: read
@@ -46,11 +46,13 @@ jobs:
         uses: open-policy-agent/setup-opa@v2
         with:
           version: 1.0.0
+        if: github.event_name == 'pull_request'
 
       - name: Run OPA Tests
         run: |
           opa_output=$(opa eval --data ${{ github.workspace }}/policies/allowed_ec2_instance_types.rego --input ${{ github.workspace }}/terraform-plan.json "data.terraform.deny" | jq -r '.result[].expressions[].value[]')
           [ -z "$opa_output" ] && exit 0 || echo "$opa_output" && gh pr comment ${{ github.event.pull_request.number }} --body "### $opa_output" && exit 1
+        if: github.event_name == 'pull_request'
 
       - name: List state file resources
         run: terraform state list
