@@ -5,6 +5,7 @@ on: workflow_dispatch
 env:
   AWS_REGION:  us-east-1
   GH_TOKEN: ${{ github.token }}
+  TF_IN_AUTOMATION: true
 
 permissions:
   id-token: write
