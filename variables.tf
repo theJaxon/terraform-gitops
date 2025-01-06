@@ -1,6 +1,6 @@
 variable "ec2_instance_type" {
   description = "Type of EC2 instance."
-  default     = "t4g.micro"
+  default     = "t2.micro"
 }
 
 variable "grafana_port" {
