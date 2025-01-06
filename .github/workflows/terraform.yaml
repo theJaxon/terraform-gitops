@@ -34,10 +34,6 @@ jobs:
         run: |
           echo 'plugin_cache_dir="~/.terraform.d/plugin-cache"' > ~/.terraformrc
           mkdir -p ~/.terraform.d/plugin-cache
-          echo "ls home dir"
-          ls ~
-          echo "ls ${{ github.workspace }}"
-          ls ${{ github.workspace }}
 
       - name: Cache Terraform Plugins
         uses: actions/cache@v4
