@@ -36,5 +36,20 @@ jobs:
           -backend-config="dynamodb_table=${{ secrets.TF_S3_BACKEND_DYNAMODB_TABLE }}" \
           -backend-config="assume_role={role_arn=\"${{ secrets.TF_S3_BACKEND_ROLE_ARN }}\"}"
 
+      - name: Terraform plan
+        run: |
+          terraform plan -out terraform-plan.binary
+          terraform show -json terraform-plan.binary > terraform-plan.json
+
+      - name: Setup OPA
+        uses: open-policy-agent/setup-opa@v2
+        with:
+          version: 1.0.0
+
+      - name: Run OPA Tests
+        run: |
+          opa_output=$(opa eval --data ${{ github.workspace }}/policies/allowed_ec2_instance_types.rego --input=${{ github.workspace }}/terraform-plan.json | jq -r '.result[].expressions[].value[]')
+          [ -z "$opaout" ] && exit 0 || echo "$opaout" && gh pr comment ${{ github.event.pull_request.number }} --body "### $opaout" && exit 1
+
       - name: List state file resources
         run: terraform state list
