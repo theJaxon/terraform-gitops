@@ -2,6 +2,17 @@ terraform {
   backend "s3" {}
 }
 
+module "github-oidc-provider" {
+  source                   = "github.com/theJaxon/terraform-aws-github-oidc-provider"
+  github_organization_name = "theJaxon"
+  github_repository_name   = "terraform-gitops"
+}
+
+module "s3backend" {
+  source = "github.com/theJaxon/terraform-aws-s3-backend"
+  principal_arn_list = [ module.github-oidc-provider.aws_iam_role_arn ]
+}
+
 data "aws_ami" "ubuntu_ami" {
   most_recent = true
   owners      = ["099720109477"] # Canonical
