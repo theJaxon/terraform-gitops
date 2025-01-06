@@ -48,8 +48,8 @@ jobs:
 
       - name: Run OPA Tests
         run: |
-          opa_output=$(opa eval --data ${{ github.workspace }}/policies/allowed_ec2_instance_types.rego --input=${{ github.workspace }}/terraform-plan.json | jq -r '.result[].expressions[].value[]')
-          [ -z "$opaout" ] && exit 0 || echo "$opaout" && gh pr comment ${{ github.event.pull_request.number }} --body "### $opaout" && exit 1
+          opa_output=$(opa eval --data ${{ github.workspace }}/policies/allowed_ec2_instance_types.rego --input ${{ github.workspace }}/terraform-plan.json "data.terraform.deny" | jq -r '.result[].expressions[].value[]')
+          [ -z "$opa_output" ] && exit 0 || echo "$opa_output" && gh pr comment ${{ github.event.pull_request.number }} --body "### $opa_output" && exit 1
 
       - name: List state file resources
         run: terraform state list
