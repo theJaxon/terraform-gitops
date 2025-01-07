@@ -78,7 +78,6 @@ jobs:
         uses: bridgecrewio/checkov-action@v12
         with:
           file: terraform-plan.json
-          framework: terraform
           output_format: cli
           soft_fail: false
           download_external_modules: true
