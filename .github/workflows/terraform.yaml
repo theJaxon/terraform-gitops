@@ -78,5 +78,5 @@ jobs:
         uses: bridgecrewio/checkov-action@master
         with:
           directory: .
-          soft_fail: true
+          soft_fail: false
           download_external_modules: true
