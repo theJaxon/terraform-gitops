@@ -61,7 +61,7 @@ terraform providers lock -platform=darwin_arm64 -platform=linux_amd64
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ec2_instance_type"></a> [ec2\_instance\_type](#input\_ec2\_instance\_type) | Type of EC2 instance. | `string` | `"t2.micro"` | no |
+| <a name="input_ec2_instance_type"></a> [ec2\_instance\_type](#input\_ec2\_instance\_type) | Type of EC2 instance. | `string` | `"t4g.micro"` | no |
 | <a name="input_grafana_port"></a> [grafana\_port](#input\_grafana\_port) | Grafana port number. | `number` | `3000` | no |
 
 ## Outputs
