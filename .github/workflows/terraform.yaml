@@ -68,3 +68,15 @@ jobs:
 
       - name: List state file resources
         run: terraform state list
+    
+  checkov:
+    name: checkov
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Run Checkov action
+        id: checkov
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          soft_fail: true
+          download_external_modules: true
